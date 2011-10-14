@@ -1,6 +1,8 @@
-<h1>Editing fortune</h1>
+<% title "Edit Fortune" %>
 
 <%= render 'form' %>
 
-<%= link_to 'Show', @fortune %> |
-<%= link_to 'Back', fortunes_path %>
+<p>
+  <%= link_to "Show", @fortune %> |
+  <%= link_to "View All", fortunes_path %>
+</p>

@@ -1,49 +1,54 @@
 require 'test_helper'
 
 class FortunesControllerTest < ActionController::TestCase
-  setup do
-    @fortune = fortunes(:one)
-  end
-
-  test "should get index" do
+  def test_index
     get :index
-    assert_response :success
-    assert_not_nil assigns(:fortunes)
+    assert_template 'index'
   end
 
-  test "should get new" do
+  def test_show
+    get :show, :id => Fortune.first
+    assert_template 'show'
+  end
+
+  def test_new
     get :new
-    assert_response :success
+    assert_template 'new'
   end
 
-  test "should create fortune" do
-    assert_difference('Fortune.count') do
-      post :create, fortune: @fortune.attributes
-    end
-
-    assert_redirected_to fortune_path(assigns(:fortune))
+  def test_create_invalid
+    Fortune.any_instance.stubs(:valid?).returns(false)
+    post :create
+    assert_template 'new'
   end
 
-  test "should show fortune" do
-    get :show, id: @fortune.to_param
-    assert_response :success
+  def test_create_valid
+    Fortune.any_instance.stubs(:valid?).returns(true)
+    post :create
+    assert_redirected_to fortune_url(assigns(:fortune))
   end
 
-  test "should get edit" do
-    get :edit, id: @fortune.to_param
-    assert_response :success
+  def test_edit
+    get :edit, :id => Fortune.first
+    assert_template 'edit'
   end
 
-  test "should update fortune" do
-    put :update, id: @fortune.to_param, fortune: @fortune.attributes
-    assert_redirected_to fortune_path(assigns(:fortune))
+  def test_update_invalid
+    Fortune.any_instance.stubs(:valid?).returns(false)
+    put :update, :id => Fortune.first
+    assert_template 'edit'
   end
 
-  test "should destroy fortune" do
-    assert_difference('Fortune.count', -1) do
-      delete :destroy, id: @fortune.to_param
-    end
+  def test_update_valid
+    Fortune.any_instance.stubs(:valid?).returns(true)
+    put :update, :id => Fortune.first
+    assert_redirected_to fortune_url(assigns(:fortune))
+  end
 
-    assert_redirected_to fortunes_path
+  def test_destroy
+    fortune = Fortune.first
+    delete :destroy, :id => fortune
+    assert_redirected_to fortunes_url
+    assert !Fortune.exists?(fortune.id)
   end
 end

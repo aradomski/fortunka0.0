@@ -33,7 +33,11 @@ group :test do
 end
 
 group :development do
+  gem 'responders'
   gem 'nifty-generators'
   gem 'wirble'
   gem 'hirb'
+  gem 'faker'
+  gem 'populator'
 end
+gem "mocha", :group => :test

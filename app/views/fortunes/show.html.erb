@@ -1,10 +1,12 @@
-<p id="notice"><%= notice %></p>
+<% title "Fortune" %>
 
 <p>
-  <b>Body:</b>
+  <strong>Body:</strong>
   <%= @fortune.body %>
 </p>
 
-
-<%= link_to 'Edit', edit_fortune_path(@fortune) %> |
-<%= link_to 'Back', fortunes_path %>
+<p>
+  <%= link_to "Edit", edit_fortune_path(@fortune) %> |
+  <%= link_to "Destroy", @fortune, :confirm => 'Are you sure?', :method => :delete %> |
+  <%= link_to "View All", fortunes_path %>
+</p>
